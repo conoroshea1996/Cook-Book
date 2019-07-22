@@ -2,7 +2,7 @@
 <h3 class="text-center my-4">Add Recipe</h3>
 <div class="container">
   <div class="row">
-    <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
+    <form action="{{ url_for('insert_recipe') }}" method="POST" class="col">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="recipeName">Recipe Name</label>
@@ -30,13 +30,16 @@
             {% endfor %}
           </select>
         </div>
+        <div class="form-group col-12">
+          <label for="recipe_Description">Dish Description</label>
+          <textarea name="recipe_des" id="recipe_des" rows="5"></textarea>
+        </div>
       </div>
       <div class="row">
-        <button class="btn btn-primary d-block" type="submit" name="action">
+        <button class="btn btn-primary mx-auto" type="submit" name="action">
           Add Recipe
         </button>
       </div>
-
   </div>
   </form>
 </div>
