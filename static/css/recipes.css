@@ -2,3 +2,14 @@
     height: 300px;
 }
 
+
+.recipeCard-img{
+    height: 90%;
+    width: 100%;
+}
+.recipeCard{
+    height: 80vh;
+    border: solid red 2px;
+}
+
+

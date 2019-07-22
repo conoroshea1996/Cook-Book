@@ -26,7 +26,7 @@ def get_recipes():
 
 @app.route('/add_recipe')
 def add_recipe():
-    return render_template('addrecipe.html', skill=mongo.db.skill.find())
+    return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find())
 
 
 @app.route('/insert_recipe', methods=['POST'])
