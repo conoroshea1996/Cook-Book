@@ -1,5 +1,16 @@
 {% extends 'base.html' %}{% block content %}
 <div class="container">
+    <form class="mt-4">
+        <div class="row">
+            <div class="form-group col">
+                <label for="inputState">State</label>
+                <select id="inputState" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                </select>
+            </div>
+        </div>
+    </form>
     <div class="row my-4">
         {% for recipe in recipe %}
         <div class="col-md-6 col-lg-4 my-3">
@@ -12,9 +23,16 @@
                     <hr>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
+                    <div class="row">
+                        <a class="btn btn-danger col"
+                            href="{{ url_for('delete_recipe', recipe_id=recipe._id) }}">Delete</a>
+                        <a class="btn btn-info col mx-2"
+                            href="{{url_for('recipe_info', recipe_id = recipe._id)}}">View</a>
+                        <a class=" btn btn-primary col"
+                            href="{{url_for('edit_recipe', recipe_id = recipe._id)}}">Edit</a>
+                    </div>
                 </div>
-                <a class="uk-button uk-button-danger"
-                    href="{{ url_for('delete_recipe', recipe_id=recipe._id) }}">Delete</a>
+
             </div>
         </div>
         {% endfor %}
