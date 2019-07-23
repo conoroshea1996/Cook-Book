@@ -22,17 +22,16 @@ textarea{
     position: fixed;
     top:0;
     left:0;
+    z-index: -100;
     background-size: 100% 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.box{
-    height: 50%;
-    width: 60%;
-    border: solid red 5px;
-}
 
 .recipeInfo .col i{
-    font-size: 40px;
+    font-size: 25px;
+}
+.recipeInfo .col p{
+    font-size: 12px;
 }
