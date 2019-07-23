@@ -4,7 +4,7 @@
 
 
 .recipeCard-img{
-    height: 90% !important;
+    height: 350px !important;
     width: 100%;
 }
 .recipeCard{
@@ -17,8 +17,11 @@ textarea{
 
 .background{
    background-image: url('../images/index.jpg');
-    height: 92vh;
+    height: 100vh;
     width: 100vw;
+    position: fixed;
+    top:0;
+    left:0;
     background-size: 100% 100%;
     display: flex;
     justify-content: center;
@@ -28,4 +31,8 @@ textarea{
     height: 50%;
     width: 60%;
     border: solid red 5px;
+}
+
+.recipeInfo .col i{
+    font-size: 40px;
 }
