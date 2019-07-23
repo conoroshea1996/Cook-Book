@@ -59,8 +59,8 @@ def update_recipe(recipe_id):
     recipe = mongo.db.Recipes
     recipe.update({'_id': ObjectId(recipe_id)}, {
         'name': request.form.get('name'),
-        'skill': 'expert',
-        'image': ''
+        'skill': request.form.get('skill'),
+        'image': request.form.get('image')
     })
     return redirect(url_for('get_recipes'))
 

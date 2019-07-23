@@ -3,13 +3,16 @@
 <div class="container">
     <div class="row">
         <form action="{{ url_for('update_recipe',recipe_id=recipeInfo._id) }}" method="POST" class="col">
-            <div class="form-group col-md-6">
-                <label for="recipeName">Recipe Name</label>
-                <input placeholder="{{recipeInfo.name}}" type="text" class="form-control" id="recipeName" name="name">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="imageUrl">Image URL</label>
-                <input type="text" class="form-control" id="imageUrl" name="image">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="recipeName">Recipe Name</label>
+                    <input placeholder="{{recipeInfo.name}}" type="text" class="form-control" id="recipeName"
+                        name="name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="imageUrl">Image URL</label>
+                    <input type="text" class="form-control" id="imageUrl" name="image">
+                </div>
             </div>
             <div class="form-group col-md-4">
                 <label for="category">Skill Level</label>
