@@ -1,14 +1,15 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import bcrypt
 
 
 app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = 'task_manager'
 app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
-
+app.secret_key = 'secret_key'
 
 mongo = PyMongo(app)
 
@@ -16,12 +17,61 @@ mongo = PyMongo(app)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+    return render_template('index.html', user=username)
+
+
+@app.route('/test')
+def test():
+
+    return render_template('test.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    users = mongo.db.users
+    login_user = users.find_one({'name': request.form['username']})
+
+    if login_user:
+        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_user['password']) == login_user['password']:
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+
+    return 'Invalid username/password combination'
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+
+    return redirect(url_for('index'))
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        users = mongo.db.users
+        existing_user = users.find_one({'name': request.form['username']})
+
+        if existing_user is None:
+            hashpass = bcrypt.hashpw(
+                request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+            users.insert(
+                {'name': request.form['username'], 'password': hashpass})
+            session['username'] = request.form['username']
+            return redirect(url_for('test'))
+
+        return 'User name already exist'
+
+    return render_template('register.html')
 
 
 @app.route('/recipes')
 def get_recipes():
-    return render_template('recipes.html', recipe=mongo.db.Recipes.find())
+    return render_template('recipes.html', recipe=mongo.db.Recipes.find(), skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find())
 
 
 @app.route('/add_recipe')
@@ -63,6 +113,15 @@ def update_recipe(recipe_id):
         'image': request.form.get('image')
     })
     return redirect(url_for('get_recipes'))
+
+
+@app.route('/filter_recipes', methods=['GET', 'POST'])
+def filter_recipes():
+    recipe = mongo.db.Recipes
+    skill = request.form.get('skill')
+    if request.method == 'POST':
+        recipes = recipe.find({'skill': skill})
+        return render_template('filter.html', recipe=recipes)
 
 
 if __name__ == '__main__':

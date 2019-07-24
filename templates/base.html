@@ -39,6 +39,15 @@
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
+        <li>
+          <a class="nav-link text-capitalize">{{user}}</a>
+        </li>
+        {% if user %}
+        <li>
+          <a href="{{url_for('logout')}}" class="nav-link">Log out</a>
+        </li>
+        {% else %}
+        {% endif %}
       </ul>
     </div>
   </nav>

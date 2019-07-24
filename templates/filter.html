@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}
+{% for recipe in recipe %}
+<h1>{{recipe.name}}</h1>
+<img src="{{recipe.image}}" alt="">
+{% endfor %}
+{% endblock %}
