@@ -46,7 +46,6 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-
     return redirect(url_for('index'))
 
 
@@ -71,7 +70,11 @@ def register():
 
 @app.route('/recipes')
 def get_recipes():
-    return render_template('recipes.html', recipe=mongo.db.Recipes.find(), skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find())
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+    return render_template('recipes.html', recipe=mongo.db.Recipes.find(), skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
 
 
 @app.route('/add_recipe')
