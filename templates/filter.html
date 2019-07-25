@@ -1,5 +1,6 @@
 {% extends 'base.html' %}{% block content %}
 
+<h1>{{recipe.count()}}</h1>
 {% if recipe.count() > 0 %}
 {% for recipe in recipe %}
 <h1>{{recipe.name}}</h1>

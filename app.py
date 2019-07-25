@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
 
+from flask_paginate import Pagination, get_page_parameter
 
 app = Flask(__name__)
 
@@ -125,6 +126,21 @@ def filter_recipes():
     if request.method == 'POST':
         recipes = recipe.find({'skill': skill})
         return render_template('filter.html', recipe=recipes)
+
+
+@app.route('/pagination')
+def pagination():
+    per_page = 5
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    recipes = mongo.db.Recipes.find()
+    pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
+                            search=False, record_name='recipes', css_framework='bootstrap4')
+
+    recipe_page = recipes.skip((page-1)*per_page).limit(per_page)
+
+    return render_template('x.html',
+                           users=recipe_page,
+                           pagination=pagination)
 
 
 if __name__ == '__main__':
