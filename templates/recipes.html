@@ -16,7 +16,9 @@
                 <label for="inputState">State</label>
                 <select id="inputState" class="form-control">
                     <option selected>Choose...</option>
-                    <option>...</option>
+                    {% for cusine in orgin %}
+                    <option value="{{ cusine.cusine_name }}">{{ cusine.cusine_name }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-12 text-center">

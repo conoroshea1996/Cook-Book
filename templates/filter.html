@@ -1,6 +1,12 @@
 {% extends 'base.html' %}{% block content %}
+
+{% if recipe.count() > 0 %}
 {% for recipe in recipe %}
 <h1>{{recipe.name}}</h1>
 <img src="{{recipe.image}}" alt="">
 {% endfor %}
+{% else %}
+<h2>No results found </h2>
+{% endif %}
+
 {% endblock %}
