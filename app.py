@@ -86,6 +86,7 @@ def get_recipes():
         username = session['username']
     else:
         username = ''
+
     return render_template('recipes.html', recipe=mongo.db.Recipes.find(), skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
 
 
@@ -97,7 +98,10 @@ def add_recipe():
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
     tasks = mongo.db.Recipes
-    tasks.insert_one(request.form.to_dict())
+    tasks.insert_one({
+        'name': request.form.get('name'),
+        'skill': request.form.get('skill'),
+        'image': defaultImage(request.form.get('image'))})
     return redirect(url_for('get_recipes'))
 
 
@@ -146,7 +150,7 @@ def pagination():
     else:
         username = ''
 
-    per_page = 6
+    per_page = 3
     page = request.args.get(get_page_parameter(), type=int, default=1)
     recipes = mongo.db.Recipes.find()
     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
