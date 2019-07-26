@@ -35,4 +35,7 @@ textarea{
 .recipeInfo .col p{
     font-size: 12px;
 }
-
+.pagination-page-info{
+    text-align: center;
+    margin: 20px;
+}

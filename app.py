@@ -14,6 +14,17 @@ app.secret_key = 'secret_key'
 
 mongo = PyMongo(app)
 
+"""
+HELPERS 
+"""
+
+
+def defaultImage(image):
+    if image:
+        return image
+    else:
+        return 'https://mamadips.com/wp-content/uploads/2016/11/defimage.gif'
+
 
 @app.route('/')
 @app.route('/index')
@@ -114,7 +125,7 @@ def update_recipe(recipe_id):
     recipe.update({'_id': ObjectId(recipe_id)}, {
         'name': request.form.get('name'),
         'skill': request.form.get('skill'),
-        'image': request.form.get('image')
+        'image': defaultImage(request.form.get('image'))
     })
     return redirect(url_for('get_recipes'))
 
@@ -130,17 +141,23 @@ def filter_recipes():
 
 @app.route('/pagination')
 def pagination():
-    per_page = 3
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+
+    per_page = 6
     page = request.args.get(get_page_parameter(), type=int, default=1)
     recipes = mongo.db.Recipes.find()
     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
-                            search=False, record_name='recipes', css_framework='bootstrap4')
+                            search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
 
     recipe_page = recipes.skip((page-1)*per_page).limit(per_page)
 
     return render_template('x.html',
                            users=recipe_page,
-                           pagination=pagination)
+                           pagination=pagination,
+                           user=username)
 
 
 if __name__ == '__main__':
