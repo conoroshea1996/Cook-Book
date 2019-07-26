@@ -26,13 +26,6 @@ def defaultImage(image):
         return 'https://mamadips.com/wp-content/uploads/2016/11/defimage.gif'
 
 
-def staySame(value, string):
-    if value:
-        return value
-    else:
-        return thisrecipe[string]
-
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -137,6 +130,11 @@ def update_recipe(recipe_id):
     recipe = mongo.db.Recipes
     thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
 
+    def staySame(value, string):
+        if value:
+            return value
+        else:
+            return thisrecipe[string]
     recipe.update({'_id': ObjectId(recipe_id)}, {
         'name': staySame(request.form.get('name'), 'name'),
         'skill': request.form.get('skill'),
