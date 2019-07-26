@@ -26,6 +26,13 @@ def defaultImage(image):
         return 'https://mamadips.com/wp-content/uploads/2016/11/defimage.gif'
 
 
+def staySame(value, string):
+    if value:
+        return value
+    else:
+        return thisrecipe[string]
+
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -101,6 +108,8 @@ def insert_recipe():
     tasks.insert_one({
         'name': request.form.get('name'),
         'skill': request.form.get('skill'),
+        'cusine': request.form.get('cusine'),
+        'recipe_des': request.form.get('recipe_des'),
         'image': defaultImage(request.form.get('image'))})
     return redirect(url_for('get_recipes'))
 
@@ -126,8 +135,10 @@ def edit_recipe(recipe_id):
 @app.route('/update_recipe/<recipe_id>', methods=['POST'])
 def update_recipe(recipe_id):
     recipe = mongo.db.Recipes
+    thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
+
     recipe.update({'_id': ObjectId(recipe_id)}, {
-        'name': request.form.get('name'),
+        'name': staySame(request.form.get('name'), 'name'),
         'skill': request.form.get('skill'),
         'image': defaultImage(request.form.get('image'))
     })
