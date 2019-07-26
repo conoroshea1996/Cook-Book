@@ -73,7 +73,7 @@ def register():
             users.insert(
                 {'name': request.form['username'], 'password': hashpass})
             session['username'] = request.form['username']
-            return redirect(url_for('test'))
+            return redirect(url_for('index'))
 
         return 'User name already exist'
 

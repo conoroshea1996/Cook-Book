@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4">
-                <form method=POST action="{{ url_for('login') }}">
+                <form method=POST action="{{ url_for('register') }}">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Username</label>
                         <input type="text" class="form-control" name="username" placeholder="Username">
@@ -14,16 +14,12 @@
                         <input type="password" class="form-control" name="pass" placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">
-                        {% if user %}
-                        Log out
-                        {% else %}
-                        Log in
-                        {% endif %}
+                        Sign up now
                     </button>
                 </form>
                 <br>
                 <div>
-                    Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.
+                    Don't have an account? <a href="#">Sign up here</a>.
                 </div>
             </div>
         </div>
