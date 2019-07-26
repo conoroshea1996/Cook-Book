@@ -130,7 +130,7 @@ def filter_recipes():
 
 @app.route('/pagination')
 def pagination():
-    per_page = 5
+    per_page = 3
     page = request.args.get(get_page_parameter(), type=int, default=1)
     recipes = mongo.db.Recipes.find()
     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,

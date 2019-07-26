@@ -1,8 +1,9 @@
 {% extends 'base.html' %}{% block content %}
 {{pagination.links }}
+{{pagination.info}}
 <div class="row">
     {% for users in users %}
-    <div class="col col-md-4">
+    <div class="col-12 col-md-4">
         <img src="{{users.image}}" alt="">
         <h4>{{users.name}}</h4>
     </div>
