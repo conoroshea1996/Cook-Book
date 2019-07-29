@@ -50,3 +50,25 @@ small{
 #drop:hover{
     cursor: pointer;
 }
+#instuctions-list{
+    display: none;
+}
+#ingredients-list{
+    display: none;
+}
+#ingredients-list li:nth-child(odd){
+    background: rgba(154, 192, 206, 0.322);
+}
+
+.stars{
+    display: flex;
+}
+.rating{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.rating h4{
+    margin-right: 20px;
+    margin-bottom: 0;
+}
