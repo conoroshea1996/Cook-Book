@@ -111,7 +111,10 @@ def insert_recipe():
         'skill': request.form.get('skill'),
         'cusine': request.form.get('cusine'),
         'recipe_des': request.form.get('recipe_des'),
-        'image': defaultImage(request.form.get('image'))})
+        'image': defaultImage(request.form.get('image')),
+        'ingredients': request.form.get('ingredients'),
+        'instuctions': request.form.get('instuctions')
+    })
     return redirect(url_for('get_recipes'))
 
 

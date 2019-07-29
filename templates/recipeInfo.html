@@ -21,6 +21,18 @@
                     <p class="m-0 pl-3">120 mins</p>
                 </div>
             </div>
+            <hr class="mt-4">
+            <h3 class="text-center">Ingredients</h3>
+            <hr>
+            <ul class="list-group">
+                {% for line in recipeInfo.ingredients.splitlines() %}
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge badge-primary badge-pill mx-3">{{loop.index}}</span>
+                    <p class="mx-auto text-center">{{ line }}</p>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>

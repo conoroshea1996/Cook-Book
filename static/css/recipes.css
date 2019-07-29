@@ -42,4 +42,8 @@ textarea{
 
 small{
     color: rgb(148, 145, 145);
+    display: block;
+}
+.ingredient-list{
+    margin: 20px;
 }
