@@ -8,16 +8,18 @@
                     <label for="recipeName">Recipe Name</label>
                     <input placeholder="{{recipeInfo.name}}" type="text" class="form-control" id="recipeName"
                         name="name">
+                    <small>Enter new recipe name or leave empty to keep orginal text</small>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="imageUrl">Image URL</label>
                     <input type="text" class="form-control" id="imageUrl" name="image">
+                    <small>Enter new recipe Image or leave empty to keep orginal Image</small>
                 </div>
             </div>
             <div class="form-group col-md-4">
                 <label for="category">Skill Level</label>
                 <select id="category" name="skill">
-                    <option value="" disabled selected>Choose Category</option>
+                    <option value="{{ recipeInfo.skill }}" selected>{{ recipeInfo.skill }}</option>
                     {% for skill in skill %}
                     <option value="{{ skill.skill }}">{{ skill.skill }}</option>
                     {% endfor %}
@@ -26,7 +28,7 @@
             <div class="form-group col-md-4">
                 <label for="Origin">Place of Origin</label>
                 <select id="Origin" name="cusine">
-                    <option value="" disabled selected>Choose Category</option>
+                    <option value="{{ recipeInfo.cusine }}" selected>{{ recipeInfo.cusine }}</option>
                     {% for orgin in orgin %}
                     <option value="{{ orgin.cusine_name }}">{{ orgin.cusine_name }}</option>
                     {% endfor %}
@@ -37,7 +39,7 @@
                 <textarea name="recipe_des" id="recipe_des" rows="5"></textarea>
             </div>
             <button class="btn btn-primary mx-auto" type="submit">
-                Add Recipe
+                Update Recipe
             </button>
     </div>
 </div>

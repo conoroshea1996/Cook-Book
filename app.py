@@ -87,7 +87,15 @@ def get_recipes():
     else:
         username = ''
 
-    return render_template('recipes.html', recipe=mongo.db.Recipes.find(), skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
+    per_page = 6
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    recipes = mongo.db.Recipes.find()
+    pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
+                            search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
+
+    recipe_page = recipes.skip((page - 1) * per_page).limit(per_page)
+
+    return render_template('recipes.html', recipe=recipe_page, pagination=pagination, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
 
 
 @app.route('/add_recipe')
@@ -135,10 +143,12 @@ def update_recipe(recipe_id):
             return value
         else:
             return thisrecipe[string]
+
     recipe.update({'_id': ObjectId(recipe_id)}, {
         'name': staySame(request.form.get('name'), 'name'),
         'skill': request.form.get('skill'),
-        'image': defaultImage(request.form.get('image'))
+        'image': staySame(request.form.get('image'), 'image'),
+        'cusine': request.form.get('cusine')
     })
     return redirect(url_for('get_recipes'))
 

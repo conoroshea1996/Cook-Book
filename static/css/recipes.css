@@ -39,3 +39,7 @@ textarea{
     text-align: center;
     margin: 20px;
 }
+
+small{
+    color: rgb(148, 145, 145);
+}
