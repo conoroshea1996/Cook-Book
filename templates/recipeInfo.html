@@ -22,9 +22,11 @@
                 </div>
             </div>
             <hr class="mt-4">
-            <h3 class="text-center">Ingredients</h3>
+
+            <h3 class="text-center">Ingredients <i class="fa fa-angle-down" id="drop" aria-hidden="true"></i></h3>
+
             <hr>
-            <ul class="list-group">
+            <ul class="list-group" id="ingredients-list">
                 {% for line in recipeInfo.ingredients.splitlines() %}
 
                 <li class="list-group-item d-flex justify-content-between align-items-center py-2">
@@ -36,4 +38,6 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{url_for('static',filename='js/app.js')}}"> </script>
 {% endblock %}

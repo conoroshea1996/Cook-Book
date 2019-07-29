@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <form action="{{ url_for('update_recipe',recipe_id=recipeInfo._id) }}" method="POST" class="col">
-            <div class="row">
+            <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="recipeName">Recipe Name</label>
                     <input placeholder="{{recipeInfo.name}}" type="text" class="form-control" id="recipeName"
@@ -15,35 +15,35 @@
                     <input type="text" class="form-control" id="imageUrl" name="image">
                     <small>Enter new recipe Image or leave empty to keep orginal Image</small>
                 </div>
+
+                <div class="form-group col-6 text-center">
+                    <label for="category" class="mx-2 ">Skill Level</label>
+                    <select id="category" name="skill">
+                        <option value="{{ recipeInfo.skill }}" selected>{{ recipeInfo.skill }}</option>
+                        {% for skill in skill %}
+                        <option value="{{ skill.skill }}">{{ skill.skill }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-6 text-center">
+                    <label for="Origin" class="mx-2">Place of Origin</label>
+                    <select id="Origin" name="cusine">
+                        <option value="{{ recipeInfo.cusine }}" selected>{{ recipeInfo.cusine }}</option>
+                        {% for orgin in orgin %}
+                        <option value="{{ orgin.cusine_name }}">{{ orgin.cusine_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <label for="recipe_Description">Dish Description</label>
+                    <textarea name="recipe_des" id="recipe_des" rows="5"></textarea>
+                </div>
+                <button class="btn btn-primary mx-auto" type="submit">
+                    Update Recipe
+                </button>
             </div>
-            <div class="form-group col-md-4">
-                <label for="category">Skill Level</label>
-                <select id="category" name="skill">
-                    <option value="{{ recipeInfo.skill }}" selected>{{ recipeInfo.skill }}</option>
-                    {% for skill in skill %}
-                    <option value="{{ skill.skill }}">{{ skill.skill }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="Origin">Place of Origin</label>
-                <select id="Origin" name="cusine">
-                    <option value="{{ recipeInfo.cusine }}" selected>{{ recipeInfo.cusine }}</option>
-                    {% for orgin in orgin %}
-                    <option value="{{ orgin.cusine_name }}">{{ orgin.cusine_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group col-12">
-                <label for="recipe_Description">Dish Description</label>
-                <textarea name="recipe_des" id="recipe_des" rows="5"></textarea>
-            </div>
-            <button class="btn btn-primary mx-auto" type="submit">
-                Update Recipe
-            </button>
     </div>
-</div>
-</form>
+    </form>
 </div>
 </div>
 

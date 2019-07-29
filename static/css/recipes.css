@@ -47,3 +47,6 @@ small{
 .ingredient-list{
     margin: 20px;
 }
+#drop:hover{
+    cursor: pointer;
+}
