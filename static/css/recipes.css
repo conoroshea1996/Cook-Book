@@ -72,3 +72,10 @@ small{
     margin-right: 20px;
     margin-bottom: 0;
 }
+
+.show-hide{
+    font-size: 0.8rem;
+    font-style: oblique;
+    color: rgb(59, 59, 59);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}

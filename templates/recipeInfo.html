@@ -24,7 +24,10 @@
             <hr class="mt-4">
 
             <h3 class="text-center">Ingredients
-                <i class="fa fa-angle-down d-block" id="drop" aria-hidden="true"></i>
+                <div>
+                    <small class="show-hide">Show / Hide</small>
+                    <i class="fa fa-angle-down" id="drop" aria-hidden="true"></i>
+                </div>
             </h3>
 
             <hr>
@@ -37,10 +40,13 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-6 my-4">
-            <h3 class="text-center ml-3">Steps <i class="fa fa-angle-down d-block" id="dropit" aria-hidden="true"></i>
+        <div class="col-10 mx-auto my-4">
+            <h3 class="text-center ml-3">Steps
+                <div>
+                    <small class="show-hide">Show / Hide</small>
+                    <i class="fa fa-angle-down" id="dropit" aria-hidden="true"></i>
+                </div>
             </h3>
-
             <hr>
             <ul class="list-group" id="instuctions-list">
                 {% for line in recipeInfo.instuctions.splitlines() %}
