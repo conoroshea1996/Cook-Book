@@ -15,7 +15,7 @@ app.secret_key = 'secret_key'
 mongo = PyMongo(app)
 
 """
-HELPERS 
+HELPERS
 """
 
 
@@ -120,7 +120,10 @@ def insert_recipe():
 
 @app.route('/single/<recipe_id>')
 def recipe_info(recipe_id):
-    recipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
+    recipe = mongo.db.Recipes.find_one_and_update(
+        {'_id': ObjectId(recipe_id)},
+        {'$inc': {'hits': 1}}
+    )
     return render_template('recipeInfo.html', recipeInfo=recipe)
 
 
@@ -167,25 +170,25 @@ def filter_recipes():
         return render_template('filter.html', recipe=recipes)
 
 
-@app.route('/pagination')
-def pagination():
-    if 'username' in session:
-        username = session['username']
-    else:
-        username = ''
+# @app.route('/pagination')
+# def pagination():
+#     if 'username' in session:
+#         username = session['username']
+#     else:
+#         username = ''
 
-    per_page = 3
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    recipes = mongo.db.Recipes.find()
-    pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
-                            search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
+#     per_page = 3
+#     page = request.args.get(get_page_parameter(), type=int, default=1)
+#     recipes = mongo.db.Recipes.find()
+#     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
+#                             search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
 
-    recipe_page = recipes.skip((page-1)*per_page).limit(per_page)
+#     recipe_page = recipes.skip((page-1)*per_page).limit(per_page)
 
-    return render_template('x.html',
-                           users=recipe_page,
-                           pagination=pagination,
-                           user=username)
+#     return render_template('x.html',
+#                            users=recipe_page,
+#                            pagination=pagination,
+#                            user=username)
 
 
 if __name__ == '__main__':

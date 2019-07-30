@@ -53,9 +53,9 @@ small{
 #instuctions-list{
     display: none;
 }
-#ingredients-list{
+/* #ingredients-list{
     display: none;
-}
+} */
 #ingredients-list li:nth-child(odd){
     background: rgba(154, 192, 206, 0.322);
 }
