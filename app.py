@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import Flask, render_template, request, url_for, redirect, session, flash
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
+import random
 
 from flask_paginate import Pagination, get_page_parameter
 
@@ -113,23 +114,36 @@ def insert_recipe():
         'recipe_des': request.form.get('recipe_des'),
         'image': defaultImage(request.form.get('image')),
         'ingredients': request.form.get('ingredients'),
-        'instuctions': request.form.get('instuctions')
+        'instuctions': request.form.get('instuctions'),
+        'tags': request.form.get('tags')
     })
     return redirect(url_for('get_recipes'))
 
 
 @app.route('/single/<recipe_id>')
 def recipe_info(recipe_id):
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+
+    randomcolors = ['info', 'primary', 'danger', 'success', 'warning']
     recipe = mongo.db.Recipes.find_one_and_update(
         {'_id': ObjectId(recipe_id)},
         {'$inc': {'hits': 1}}
     )
-    return render_template('recipeInfo.html', recipeInfo=recipe)
+    return render_template('recipeInfo.html', recipeInfo=recipe, colors=randomcolors, user=username)
 
 
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
-    mongo.db.Recipes.remove({'_id': ObjectId(recipe_id)})
+    recipes = mongo.db.Recipes.find()
+    min_Data = 11
+    if recipes.count() < 11:
+        flash(
+            'cant have less than {} recipes in the database'.format(min_Data-1), 'danger')
+    else:
+        mongo.db.Recipes.remove({'_id': ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
 
 
@@ -189,6 +203,45 @@ def filter_recipes():
 #                            users=recipe_page,
 #                            pagination=pagination,
 #                            user=username)
+
+@app.route('/vote/<recipe_id>')
+def vote(recipe_id):
+    recipe = mongo.db.Recipes
+    thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
+    votes = mongo.db.votes
+    user = mongo.db.users.find_one({'name': session['username']})
+
+    allrecipes = recipe.find()
+    votes.remove()
+    for recipeID in allrecipes:
+        votes.insert({
+            'recipeID': recipeID['_id'],
+            'username': []
+        })
+
+    # users = []
+
+    # for vote in vote:
+    #     users.append(vote['user_id']['name'])
+
+    # if user['name'] in users:
+    #     votes.remove({'user_id': user})
+    # else:
+    #     votes.insert_one(
+    #         {'recipe_id': ObjectId(recipe_id),
+    #          'like': 1,
+    #          'user_id': user
+    #          }
+    #     )
+
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+
+    randomcolors = ['info', 'primary', 'danger', 'success', 'warning']
+
+    return redirect(url_for('recipe_info', recipe_id=recipe_id))
 
 
 if __name__ == '__main__':

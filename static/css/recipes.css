@@ -79,3 +79,7 @@ small{
     color: rgb(59, 59, 59);
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+.error{
+    color: red;
+}
