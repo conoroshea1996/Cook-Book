@@ -26,7 +26,7 @@
             </div>
             <div class="form-group col-12 col-md-6">
                 <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
+                <select id="cusine" name="cusine" class="form-control">
                     <option selected>Choose...</option>
                     {% for cusine in orgin %}
                     <option value="{{ cusine.cusine_name }}">{{ cusine.cusine_name }}</option>
@@ -40,14 +40,14 @@
     </form>
     <div class="row my-4">
         {% for recipe in recipe %}
-        <div class="col-md-6 col-lg-4 my-3">
-            <div class="card" style="width: 100%">
+        <div class="col-md-6 col-lg-4 my-3 d-flex align-items-stretch">
+            <div class="card" style="width: 100%;">
                 <a href="{{url_for('recipe_info', recipe_id = recipe._id)}}">
                     <img src="{{recipe.image}}" class="card-img-top" alt="{{recipe.name}}">
                 </a>
-                <div class="card-body">
+                <div class="card-body card_content">
                     <h5 class="card-title text-center text-uppercase">{{recipe.name}}</h5>
-                    <hr>
+                    <hr class="mb-0">
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
                     {% if user %}

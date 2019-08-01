@@ -178,9 +178,18 @@ def update_recipe(recipe_id):
 @app.route('/filter_recipes', methods=['GET', 'POST'])
 def filter_recipes():
     recipe = mongo.db.Recipes
-    skill = request.form.get('skill')
+    default = 'Choose...'
+
     if request.method == 'POST':
-        recipes = recipe.find({'skill': skill})
+        skill = request.form.get('skill')
+        cusine = request.form.get('cusine')
+        if skill and cusine == default:
+            recipes = recipe.find({'skill': skill})
+        elif skill == default and cusine:
+            recipes = recipe.find({'cusine': cusine})
+        elif skill and cusine:
+            recipes = recipe.find({'skill': skill, 'cusine': cusine})
+
         return render_template('filter.html', recipe=recipes)
 
 
@@ -212,13 +221,19 @@ def vote(recipe_id):
     user = mongo.db.users.find_one({'name': session['username']})
 
     allrecipes = recipe.find()
-    votes.remove()
     for recipeID in allrecipes:
-        votes.insert({
-            'recipeID': recipeID['_id'],
-            'username': []
-        })
+        if 2+2 == 3:
+            pass
+        else:
+            votes.insert({
+                'recipeID': recipeID['_id'],
+                'username': []
+            })
 
+    votes.update(
+        {'recipeID': ObjectId(recipe_id)},
+        {'$push': {'username': session['username']}}
+    )
     # users = []
 
     # for vote in vote:
