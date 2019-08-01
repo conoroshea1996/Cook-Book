@@ -83,3 +83,8 @@ small{
 .error{
     color: red;
 }
+.card_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
