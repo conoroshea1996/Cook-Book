@@ -115,8 +115,10 @@ def insert_recipe():
         'image': defaultImage(request.form.get('image')),
         'ingredients': request.form.get('ingredients'),
         'instuctions': request.form.get('instuctions'),
-        'tags': request.form.get('tags')
+        'tags': request.form.get('tags'),
+        'userid': session['username']
     })
+
     return redirect(url_for('get_recipes'))
 
 
@@ -132,18 +134,32 @@ def recipe_info(recipe_id):
         {'_id': ObjectId(recipe_id)},
         {'$inc': {'hits': 1}}
     )
-    return render_template('recipeInfo.html', recipeInfo=recipe, colors=randomcolors, user=username)
+    votes = mongo.db.votes
+    current_recipe = mongo.db.votes.find_one({'recipeId': recipe_id})
+
+    if current_recipe in votes.find():
+        pass
+    else:
+        votes.insert({
+            'recipeId': recipe_id,
+            'users': []
+        })
+
+    likes = mongo.db.votes.find_one({'recipeId': recipe_id})
+    num_likes = len(likes['users'])
+    if num_likes > 0:
+        total_likes = len(likes['users'])
+    else:
+        total_likes = 0
+
+    return render_template('recipeInfo.html', recipeInfo=recipe, colors=randomcolors, user=username, likes=total_likes, userlike=likes)
 
 
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
     recipes = mongo.db.Recipes.find()
-    min_Data = 11
-    if recipes.count() < 11:
-        flash(
-            'cant have less than {} recipes in the database'.format(min_Data-1), 'danger')
-    else:
-        mongo.db.Recipes.remove({'_id': ObjectId(recipe_id)})
+
+    mongo.db.Recipes.remove({'_id': ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
 
 
@@ -179,10 +195,15 @@ def update_recipe(recipe_id):
 def filter_recipes():
     recipe = mongo.db.Recipes
     default = 'Choose...'
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
 
     if request.method == 'POST':
         skill = request.form.get('skill')
         cusine = request.form.get('cusine')
+        recipes = ''
         if skill and cusine == default:
             recipes = recipe.find({'skill': skill})
         elif skill == default and cusine:
@@ -190,7 +211,8 @@ def filter_recipes():
         elif skill and cusine:
             recipes = recipe.find({'skill': skill, 'cusine': cusine})
 
-        return render_template('filter.html', recipe=recipes)
+    recipeValues = recipes.count()
+    return render_template('filter.html', recipe=recipes, user=username, count=recipeValues)
 
 
 # @app.route('/pagination')
@@ -220,20 +242,25 @@ def vote(recipe_id):
     votes = mongo.db.votes
     user = mongo.db.users.find_one({'name': session['username']})
 
-    allrecipes = recipe.find()
-    for recipeID in allrecipes:
-        if 2+2 == 3:
-            pass
-        else:
-            votes.insert({
-                'recipeID': recipeID['_id'],
-                'username': []
-            })
+    current_recipe = mongo.db.votes.find_one({'recipeId': recipe_id})
 
-    votes.update(
-        {'recipeID': ObjectId(recipe_id)},
-        {'$push': {'username': session['username']}}
-    )
+    if current_recipe in votes.find():
+        pass
+    else:
+        votes.insert({
+            'recipeId': recipe_id,
+            'users': []
+        })
+
+    if session['username'] in current_recipe['users']:
+        votes.update({'recipeId': recipe_id}, {
+                     '$pull': {'users': session['username']}})
+    else:
+        votes.update(
+            {'recipeId': recipe_id},
+            {'$push': {'users': session['username']}}
+        )
+
     # users = []
 
     # for vote in vote:

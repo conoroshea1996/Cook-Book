@@ -1,10 +1,13 @@
 {% extends 'base.html' %}{% block content %}
 <div class="container">
+    {{userlike.users}}
+    <a href="{{url_for('get_recipes')}}" class="btn btn-info"> back</a>
     <div class="row recipeCard my-3">
         <div class="col-12 col-lg-6">
             <img class="recipeCard-img" src="{{recipeInfo.image}}" alt="">
             <h5 class="text-muted">Views : {{recipeInfo.hits}}</h5>
-            <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" class="btn btn-primary"></a>
+            <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" class="btn btn-sm btn-primary">Like</a>
+            <p class="show-hide">tags:</p>
             <div class="row">
                 {% for tag in recipeInfo.tags.split(',') %}
                 <p class=" col mx-3 btn alert-{{colors[range(0, 5) | random ]}}">{{tag}}</p>
@@ -17,15 +20,21 @@
             <div class="row recipeInfo">
                 <div class="col d-flex justify-content-center align-items-center">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
-                    <p class="m-0 pl-3 text-center">120 mins</p>
+                    <p class="m-0 pl-3 text-center">
+                        {% if recipeInfo.time %}
+                        {{recipeInfo.time}} mins
+                        {% else %}
+                        unknown
+                        {% endif %} </p>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                     <p class="m-0 pl-3">120 mins</p>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
-                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                    <p class="m-0 pl-3">{{recipeInfo.likes}}</p>
+                    <i class="fa fa-thumbs-o-up {% if session['username'] in userlike.users %} liked {% else %} {% endif %}"
+                        aria-hidden="true"></i>
+                    <p class="m-0 pl-3">{{likes}}</p>
                 </div>
             </div>
             <hr class="mt-4">

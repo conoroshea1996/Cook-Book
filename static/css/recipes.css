@@ -88,3 +88,7 @@ small{
     flex-direction: column;
     justify-content: space-between;
 }
+
+.liked{
+    color: rgb(48, 226, 48);
+}
