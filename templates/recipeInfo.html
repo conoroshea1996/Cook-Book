@@ -1,4 +1,9 @@
 {% extends 'base.html' %}{% block content %}
+<div class="warning-message">
+    <div class="alert alert-info text-center font-weight-bold" role="alert">
+        You need to be logged in to do that
+    </div>
+</div>
 <div class="container">
     {{userlike.users}}
     <a href="{{url_for('get_recipes')}}" class="btn btn-info"> back</a>
@@ -6,7 +11,12 @@
         <div class="col-12 col-lg-6">
             <img class="recipeCard-img" src="{{recipeInfo.image}}" alt="">
             <h5 class="text-muted">Views : {{recipeInfo.hits}}</h5>
+            {% if session['username'] %}
             <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" class="btn btn-sm btn-primary">Like</a>
+            {% else %}
+            <a href="#" id="sign_in_like" class="btn btn-sm btn-primary">Like</a>
+            {% endif %}
+
             <p class="show-hide">tags:</p>
             <div class="row">
                 {% for tag in recipeInfo.tags.split(',') %}

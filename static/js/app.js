@@ -5,4 +5,12 @@ $(document).ready(function () {
     $('#dropit').click(function () {
         $('#instuctions-list').slideToggle('slow');
     });
+
+    $('#sign_in_like').click(function () {
+        $('.warning-message').slideDown(function () {
+            setTimeout(function () {
+                $('.warning-message').slideUp();
+            }, 3000);
+        })
+    })
 });

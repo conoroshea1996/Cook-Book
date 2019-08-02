@@ -92,3 +92,6 @@ small{
 .liked{
     color: rgb(48, 226, 48);
 }
+.warning-message{
+    display: none;
+}
