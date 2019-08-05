@@ -14,3 +14,21 @@ As a user of the recipe cookbook I should be able to do the following things:
 * Get a more detailed view of each recipe where I can see ingredients and how to make it.
 * Like recipes
 
+## Current Features
+*Register and  Login*
+* A user can sign up and create a new account. 
+* The password of the user is hased before its stored in the database
+* Username and password are checked to make sure its the corect user
+* Once the user is logged in there nav will change giving them access to extra features
+
+*Recipes*
+* A user can look through all the current recipes in the data base
+
+*Single Recipe*
+* Where a user can view a more detailed view of the recipe.
+* Info such as ingredients and instruction can be viewed here.
+
+*Like Button*
+* Once a user is logged in they have the ability to like a recipe
+* the number of liked is displayed in the recipe page based on how many users have liked the page 
+
