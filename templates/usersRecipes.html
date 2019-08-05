@@ -1,0 +1,39 @@
+{% extends 'base.html' %}{% block content %}
+<div class="container">
+
+    <div class="row my-4">
+        {% for recipe in recipe %}
+        <div class="col-md-6 col-lg-4 my-3 d-flex align-items-stretch">
+            <div class="card" style="width: 100%;">
+                <a href="{{url_for('recipe_info', recipe_id = recipe._id)}}">
+                    <img src="{{recipe.image}}" class="card-img-top" alt="{{recipe.name}}">
+                </a>
+                <div class="card-body card_content">
+                    <h5 class="card-title text-center text-uppercase">{{recipe.name}}</h5>
+                    <hr class="mb-0">
+                    <p class="card-text">{{recipe.recipe_des}}</p>
+                    {% if recipe.userid == session['username'] %}
+                    <div class="row">
+                        <a class="btn btn-danger col"
+                            href="{{ url_for('delete_recipe', recipe_id=recipe._id) }}">Delete</a>
+                        <a class="btn btn-info col mx-2"
+                            href="{{url_for('recipe_info', recipe_id = recipe._id)}}">View</a>
+                        <a class=" btn btn-primary col"
+                            href="{{url_for('edit_recipe', recipe_id = recipe._id)}}">Edit</a>
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <a class="btn btn-info col mx-2"
+                            href="{{url_for('recipe_info', recipe_id = recipe._id)}}">View</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {{pagination.info}}
+    {{ pagination.links }}
+</div>
+{% endblock %}

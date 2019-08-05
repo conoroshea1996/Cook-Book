@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
 import random
+import re
 
 from flask_paginate import Pagination, get_page_parameter
 
@@ -93,10 +94,26 @@ def get_recipes():
     recipes = mongo.db.Recipes.find()
     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
                             search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
-
     recipe_page = recipes.skip((page - 1) * per_page).limit(per_page)
 
     return render_template('recipes.html', recipe=recipe_page, pagination=pagination, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
+
+
+@app.route('/users_recipes')
+def users_recipes():
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+
+    per_page = 3
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    recipes = mongo.db.Recipes.find({'userid': username})
+    pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
+                            search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
+
+    recipe_page = recipes.skip((page - 1) * per_page).limit(per_page)
+    return render_template('usersRecipes.html', recipe=recipe_page, pagination=pagination, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
 
 
 @app.route('/add_recipe')
@@ -194,7 +211,6 @@ def update_recipe(recipe_id):
 @app.route('/filter_recipes', methods=['GET', 'POST'])
 def filter_recipes():
     recipe = mongo.db.Recipes
-    default = 'Choose...'
     if 'username' in session:
         username = session['username']
     else:
@@ -203,37 +219,24 @@ def filter_recipes():
     if request.method == 'POST':
         skill = request.form.get('skill')
         cusine = request.form.get('cusine')
-        recipes = ''
-        if skill and cusine == default:
-            recipes = recipe.find({'skill': skill})
-        elif skill == default and cusine:
-            recipes = recipe.find({'cusine': cusine})
-        elif skill and cusine:
-            recipes = recipe.find({'skill': skill, 'cusine': cusine})
+        search_text = request.form.get('query')
+
+        """ THANKS TO MY MENTOR SPENCER FOR HELPING ME WITH SEARCH QUERY LOGIC  """
+        query = {'$regex': re.compile(
+            '.*{}.*'.format(search_text)), '$options': 'i'}
+
+        recipes = recipe.find({'$or':
+                               [
+                                   {'name': query},
+                                   {'tags': query},
+                                   {'ingredients': query}
+                               ]
+                               })
 
     recipeValues = recipes.count()
-    return render_template('filter.html', recipe=recipes, user=username, count=recipeValues)
 
+    return render_template('filter.html', recipe=recipes, user=username, count=recipeValues, query=query, search=search_text)
 
-# @app.route('/pagination')
-# def pagination():
-#     if 'username' in session:
-#         username = session['username']
-#     else:
-#         username = ''
-
-#     per_page = 3
-#     page = request.args.get(get_page_parameter(), type=int, default=1)
-#     recipes = mongo.db.Recipes.find()
-#     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
-#                             search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
-
-#     recipe_page = recipes.skip((page-1)*per_page).limit(per_page)
-
-#     return render_template('x.html',
-#                            users=recipe_page,
-#                            pagination=pagination,
-#                            user=username)
 
 @app.route('/vote/<recipe_id>')
 def vote(recipe_id):
