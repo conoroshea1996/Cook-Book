@@ -30,5 +30,30 @@ As a user of the recipe cookbook I should be able to do the following things:
 
 *Like Button*
 * Once a user is logged in they have the ability to like a recipe
-* the number of liked is displayed in the recipe page based on how many users have liked the page 
+* the number of liked is displayed in the recipe page based on how many users have liked the recipe
+
+*Add and Edit Recipes*
+* A form input which allows the user to add a recipe to the database.
+* HTML form validation used to make sure the required fields cant be empty
+* The same form is used to edit and updated the recipe.
+
+*Delete a Recipe*
+* The user can delete there own recipes which they have created 
+
+
+## Technologies Used
+
+#### Python
+* Provides the logic for this site
+
+
+#### Flask
+* Template langauge that provides all the routes and redirects for this projects web pages
+
+#### Jinja
+* To implement python code into html files
+
+#### Pymongo
+* Pymongo was used for interacting with MongoDB database from Python
+
 
