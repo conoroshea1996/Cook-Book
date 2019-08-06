@@ -11,9 +11,18 @@
         <div class="col-12 col-lg-6">
             <img class="recipeCard-img" src="{{recipeInfo.image}}" alt="">
             <div class="row">
-                <h3 class="show-hide col-6">Views : {{recipeInfo.hits}}</h3>
+                <h3 class="show-hide col-4 my-2">Views : {{recipeInfo.hits}}</h3>
+                <h3 class="show-hide col-4 my-2">Recipe by:{{recipeInfo.userid}}</h3>
                 {% if session['username'] %}
-                <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" class="btn btn-sm btn-primary ">Like</a>
+                {% if session['username'] in userlike.users %}
+                <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}"
+                    class=" btn btn-sm btn-secondary like-btn my-2">Unlike <i class="fa fa-thumbs-o-up"></i></a>
+                {% else %}
+                <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}"
+                    class="btn btn-sm btn-primary like-btn my-2">Like
+                    <i class="fa fa-thumbs-o-up"></i></a>
+                {% endif %}
+
                 {% else %}
                 <a href="#" id="sign_in_like" class="btn btn-sm btn-primary">Like</a>
                 {% endif %}
@@ -24,6 +33,11 @@
                 {% for tag in recipeInfo.tags.split(',') %}
                 <p class=" col-2 p-0 mx-2 my-0 btn alert-{{colors[range(0, 5) | random ]}}">{{tag}}</p>
                 {% endfor %}
+            </div>
+            <div class="row my-3">
+                <div class="col text-center">
+                    <p>{{recipeInfo.recipe_des}}</p>
+                </div>
             </div>
         </div>
         <div class="col-12 col-lg-6">
