@@ -1,26 +1,28 @@
 {% extends 'base.html' %}{% block content %}
+
 <div class="warning-message">
     <div class="alert alert-info text-center font-weight-bold" role="alert">
         You need to be logged in to do that
     </div>
 </div>
 <div class="container">
-    {{userlike.users}}
     <a href="{{url_for('get_recipes')}}" class="btn btn-info"> back</a>
     <div class="row recipeCard my-3">
         <div class="col-12 col-lg-6">
             <img class="recipeCard-img" src="{{recipeInfo.image}}" alt="">
-            <h5 class="text-muted">Views : {{recipeInfo.hits}}</h5>
-            {% if session['username'] %}
-            <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" class="btn btn-sm btn-primary">Like</a>
-            {% else %}
-            <a href="#" id="sign_in_like" class="btn btn-sm btn-primary">Like</a>
-            {% endif %}
+            <div class="row">
+                <h3 class="show-hide col-6">Views : {{recipeInfo.hits}}</h3>
+                {% if session['username'] %}
+                <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" class="btn btn-sm btn-primary ">Like</a>
+                {% else %}
+                <a href="#" id="sign_in_like" class="btn btn-sm btn-primary">Like</a>
+                {% endif %}
+            </div>
 
-            <p class="show-hide">tags:</p>
+            <p class="show-hide my-0">tags:</p>
             <div class="row">
                 {% for tag in recipeInfo.tags.split(',') %}
-                <p class=" col mx-3 btn alert-{{colors[range(0, 5) | random ]}}">{{tag}}</p>
+                <p class=" col-2 p-0 mx-2 my-0 btn alert-{{colors[range(0, 5) | random ]}}">{{tag}}</p>
                 {% endfor %}
             </div>
         </div>
