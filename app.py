@@ -118,6 +118,9 @@ def users_recipes():
 
 @app.route('/add_recipe')
 def add_recipe():
+    if 'username' not in session:
+        return render_template('error404.html')
+
     return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find())
 
 
