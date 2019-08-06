@@ -13,4 +13,6 @@ $(document).ready(function () {
             }, 3000);
         })
     })
+    $('#x').delay(3000).fadeOut('slow');
+
 });

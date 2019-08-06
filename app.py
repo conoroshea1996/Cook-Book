@@ -53,8 +53,9 @@ def login():
         if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_user['password']) == login_user['password']:
             session['username'] = request.form['username']
             return redirect(url_for('index'))
-
-    return 'Invalid username/password combination'
+    else:
+        flash('Password/Username do not match', 'error')
+        return redirect(url_for('index'))
 
 
 @app.route('/logout')
@@ -210,6 +211,8 @@ def update_recipe(recipe_id):
         'cusine': request.form.get('cusine'),
         'ingredients': request.form.get('ingredients').strip(),
         'instuctions': request.form.get('instuctions').strip(),
+        'tags': request.form.get('tags'),
+        'userid': session['username']
     })
     return redirect(url_for('get_recipes'))
 
