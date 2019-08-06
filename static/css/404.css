@@ -5,7 +5,8 @@
 
 body {
     padding: 0;
-    margin: 0
+    margin: 0;
+    background:rgba(238, 236, 236, 0.329);
 }
 
 #notfound {
@@ -17,28 +18,23 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%)
 }
 
 .notfound {
-    max-width: 520px;
+    max-width: 60%;
     width: 100%;
     text-align: center;
     line-height: 1.4
 }
 
-.notfound .notfound-404 {
-    height: 190px
-}
 
 .notfound .notfound-404 h1 {
     font-family: montserrat,sans-serif;
-    font-size: 10rem;
+    font-size: 6rem !important;
     font-weight: 700;
     margin: 0;
-    color: #232323
+    color: #232323;
 }
 
 .notfound .notfound-404 h1>span {
@@ -47,14 +43,19 @@ body {
     height: 120px;
     background-image: url(../images/Cookie-PNG.png);
     background-size: cover;
-    z-index: -1
+    z-index: -1;
+    margin: 14px ;
+    transition: all 0.5s ease-in-out;
+}
+.notfound .notfound-404 h1>span:hover {
+    transform: scale(1.2)
 }
 
 .notfound h2 {
     font-family: montserrat,sans-serif;
     font-size: 22px;
     font-weight: 700;
-    margin: 0;
+    margin-top:0.5rem; 
     text-transform: uppercase;
     color: #232323
 }
@@ -68,11 +69,11 @@ body {
 .notfound a {
     font-family: montserrat,sans-serif;
     display: inline-block;
-    padding: 12px 30px;
+    padding: 1rem;
     font-weight: 700;
-    background-color: #f99827;
+    background-color: #098fc4;
     color: #fff;
-    border-radius: 40px;
+    border-radius: 1.2rem;
     text-decoration: none;
     -webkit-transition: .2s all;
     transition: .2s all
@@ -84,15 +85,17 @@ body {
 
 @media only screen and (max-width: 767px) {
     .notfound .notfound-404 {
-        height:115px
+        height:50%;
     }
 
     .notfound .notfound-404 h1 {
-        font-size: 86px
+        font-size: 2rem;
     }
 
     .notfound .notfound-404 h1>span {
-        width: 86px;
-        height: 86px
+        width: 20%;
+        height: 5rem;
+        margin: 0;
+        padding: 2.5rem;
     }
 }
