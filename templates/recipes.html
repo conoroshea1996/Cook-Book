@@ -1,21 +1,13 @@
 {% extends 'base.html' %}{% block content %}
 <div class="container">
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-    {% for category,message in messages %}
-    <div class="alert bg-{{category}} alert-dismissible fade show my-4" role="alert">
-        <span class="text-light text-uppercase">{{ message }}</span>
-        <button type="button" class="close text-light" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <form class="mt-4" action="/filter_recipes" method="POST">
-        <div class="row">
 
-            <div class="form-group col-12 col-md-6">
+    <form class="mt-4" action="{{url_for('filter_recipes')}}" method="POST">
+        <div class="row">
+            <div class="searchbar">
+                <input class="searchBar" type="text" placeholder="Search" aria-label="Search" name="query" id="query">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+            <!-- <div class="form-group col-12 col-md-6">
                 <label for="inputState">State</label>
                 <select id="skill" name="skill" class="form-control">
                     <option selected>Choose...</option>
@@ -32,7 +24,7 @@
                     <option value="{{ cusine.cusine_name }}">{{ cusine.cusine_name }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            </div> -->
             <div class="col-12 text-center">
                 <button class="btn btn-primary w-100" type="submit" name="action">Filter</button>
             </div>
