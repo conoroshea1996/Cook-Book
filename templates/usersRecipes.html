@@ -1,6 +1,7 @@
 {% extends 'base.html' %}{% block content %}
 <div class="container">
-
+    <h1 class="text-center"> Welcome {{session['username']}} </h1>
+    <h2 class="text-center">You currently have {{recipe.count()}} recipes in the database</h2>
     <div class="row my-4">
         {% for recipe in recipe %}
         <div class="col-md-6 col-lg-4 my-3 d-flex align-items-stretch">

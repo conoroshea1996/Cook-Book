@@ -47,7 +47,11 @@
           </div>
         </li>
         <li>
-          <a class="nav-link text-capitalize">{{user}}</a>
+          <a class="nav-link text-capitalize dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user}}</a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{url_for('users_recipes')}}">My Recipes</a>
+          </div>
         </li>
         <li>
           <a href="{{url_for('logout')}}" class="nav-link">Log out</a>
