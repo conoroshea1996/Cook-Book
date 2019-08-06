@@ -74,7 +74,7 @@ small{
 }
 
 .show-hide{
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-style: oblique;
     color: rgb(59, 59, 59);
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -95,3 +95,24 @@ small{
 .warning-message{
     display: none;
 }
+.searchbar{
+    width: 100%;
+    margin: auto;
+}
+.searchBar{
+    width: 95%;
+    border: none;
+    border-bottom: lightgreen 2px solid;
+    margin: 0.8rem auto;
+}
+.searchBar:focus{
+    outline: none;
+}
+.like-btn{
+    padding: 0;
+    font-size: 0.8rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    max-height: 25px;
+}
+
