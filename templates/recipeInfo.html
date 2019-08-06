@@ -18,7 +18,7 @@
                 <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}"
                     class=" btn btn-sm btn-secondary like-btn my-2">Unlike <i class="fa fa-thumbs-o-up"></i></a>
                 {% else %}
-                <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}"
+                <a href="{{url_for('vote', recipe_id = recipeInfo._id)}}" id="sign_in_like"
                     class="btn btn-sm btn-primary like-btn my-2">Like
                     <i class="fa fa-thumbs-o-up"></i></a>
                 {% endif %}
