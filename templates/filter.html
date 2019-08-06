@@ -1,7 +1,7 @@
 {% extends 'base.html' %}{% block content %}
 {{query}}
 {{search}}
-<h1 class="text-center">{{count}} RESULTS FOUND</h1>
+<h1 class="text-center">{{count}} RESULTS FOUND FOR {{search.upper()}}</h1>
 {% if recipe.count() > 0 %}
 <div class="container">
     <div class="row my-4">
