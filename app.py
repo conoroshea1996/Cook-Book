@@ -81,7 +81,8 @@ def register():
             session['username'] = request.form['username']
             return redirect(url_for('index'))
 
-        return 'User name already exist'
+        flash('User already exist try something else', 'error')
+        return redirect(url_for('index'))
 
     return render_template('register.html')
 
@@ -212,6 +213,7 @@ def update_recipe(recipe_id):
         'skill': request.form.get('skill'),
         'image': staySame(request.form.get('image'), 'image'),
         'cusine': request.form.get('cusine'),
+        'recipe_des': request.form.get('recipe_des'),
         'ingredients': request.form.get('ingredients').strip(),
         'instuctions': request.form.get('instuctions').strip(),
         'tags': request.form.get('tags'),
