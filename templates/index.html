@@ -15,11 +15,15 @@
 
         {% if user %}
         <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-8 mx auto">
                 <div class="card card-home" style="width: 100%;">
                     <div class="card-body card_content">
                         <h5 class="card-title text-center text-uppercase"> Welcome back {{user}}</h5>
                         <hr class="mb-0">
+                        <div class="row">
+                            <a class=" btn btn-primary col" href="{{url_for('users_recipes')}}">Check out all your
+                                Recipes here</a>
+                        </div>
                     </div>
                 </div>
                 {% else %}

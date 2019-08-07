@@ -121,7 +121,10 @@ small{
     display: block;
 }
 .card-home{
-    background: lightblue;
-    height: 300px;
+    background: rgba(58, 20, 5, 0.226);
+    height: 10rem;
+    margin: auto;
+    color: white;
 }
+
 
