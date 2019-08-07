@@ -83,7 +83,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-10 mx-auto my-4">
+        <div class="col-12 mx-auto my-4">
             <h3 class="text-center ml-3">Steps
                 <div>
                     <small class="show-hide">Show / Hide</small>
@@ -99,6 +99,54 @@
                 </li>
                 {% endfor %}
             </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <h1 class="text-center">comment section</h1>
+            <form action="{{url_for('add_coment',recipe_id=recipeInfo._id)}}" method="POST">
+                <div class="form-group">
+                    <input type="text" name="comment" id="comment" placeholder="make a comment">
+                    <button class="btn btn-primary mx-auto p-0" type="submit">
+                        Post
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row bootstrap snippets">
+        <div class="col-12">
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Comment panel
+                    </div>
+                    <div class="panel-body">
+                        <div class="clearfix"></div>
+                        <hr>
+                        <ul class="media-list">
+                            {% for comment in recipeInfo.comments %}
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">{{comment.date}}</small>
+                                    </span>
+                                    <strong class="text-success ml-3">@{{comment.userid}}</strong>
+                                    <p class="ml-3">
+                                        {{comment.comments}}
+                                    </p>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

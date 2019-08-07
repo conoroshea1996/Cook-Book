@@ -5,6 +5,7 @@ from bson.objectid import ObjectId
 import bcrypt
 import random
 import re
+import datetime
 
 from flask_paginate import Pagination, get_page_parameter
 
@@ -301,6 +302,22 @@ def vote(recipe_id):
     randomcolors = ['info', 'primary', 'danger', 'success', 'warning']
 
     return redirect(url_for('recipe_info', recipe_id=recipe_id))
+
+
+@app.route('/comments/<recipe_id>', methods=['POST'])
+def add_coment(recipe_id):
+    if request.method == 'POST':
+        recipe = mongo.db.Recipes
+        thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
+        recipe.update(
+            {'_id': ObjectId(recipe_id)},
+            {'$push': {'comments': {
+                'userid': session['username'],
+                'comments': request.form.get('comment'),
+                'date': datetime.datetime.now()
+            }}}
+        )
+        return redirect(url_for('recipe_info', recipe_id=recipe_id))
 
 
 if __name__ == '__main__':
