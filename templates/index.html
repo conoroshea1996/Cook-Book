@@ -1,31 +1,57 @@
 {% extends 'base.html' %}{% block content %}
 <div class="background">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <form method=POST action="{{ url_for('login') }}">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" name="username" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="pass" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">
-                        {% if user %}
-                        Log out
-                        {% else %}
-                        Log in
-                        {% endif %}
-                    </button>
-                </form>
-                <br>
-                <div>
-                    Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.
-                </div>
-            </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div id="x" class="message-login">
+        <div class="alert alert-info text-center font-weight-bold" role="alert">
+            {{message}}
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="container">
+
+        {% if user %}
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="card card-home" style="width: 100%;">
+                    <div class="card-body card_content">
+                        <h5 class="card-title text-center text-uppercase"> Welcome back {{user}}</h5>
+                        <hr class="mb-0">
+                    </div>
+                </div>
+                {% else %}
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <form method=POST action="{{ url_for('login') }}">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" name="pass" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                {% if user %}
+                                Log out
+                                {% else %}
+                                Log in
+                                {% endif %}
+                            </button>
+                        </form>
+                        <br>
+                        <div>
+                            Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a>.
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="{{url_for('static',filename='js/app.js')}}"> </script>
+        {% endblock %}
