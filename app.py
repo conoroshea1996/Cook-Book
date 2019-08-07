@@ -54,8 +54,11 @@ def login():
             session['username'] = request.form['username']
             return redirect(url_for('index'))
         else:
-            flash('Password/Username do not match', 'error')
+            flash('Password does not match username', 'error')
             return redirect(url_for('index'))
+    else:
+        flash("We sorry but this username doesn't seem to exist", 'error')
+        return redirect(url_for('index'))
 
 
 @app.route('/logout')
