@@ -29,6 +29,13 @@ def defaultImage(image):
         return 'https://mamadips.com/wp-content/uploads/2016/11/defimage.gif'
 
 
+def defaultUserImage(image):
+    if image:
+        return image
+    else:
+        return 'https://image.shutterstock.com/image-vector/male-user-account-profile-flat-260nw-274504883.jpg'
+
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -78,7 +85,7 @@ def register():
             hashpass = bcrypt.hashpw(
                 request.form['pass'].encode('utf-8'), bcrypt.gensalt())
             users.insert(
-                {'name': request.form['username'], 'password': hashpass})
+                {'name': request.form['username'], 'password': hashpass, 'avatar': defaultUserImage(request.form.get('avatar'))})
             session['username'] = request.form['username']
             return redirect(url_for('index'))
 
@@ -95,9 +102,10 @@ def get_recipes():
     else:
         username = ''
 
+    recipes = mongo.db.Recipes.find()
+
     per_page = 6
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    recipes = mongo.db.Recipes.find()
     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
                             search=False, record_name='recipes', css_framework='bootstrap4', alignment='center')
     recipe_page = recipes.skip((page - 1) * per_page).limit(per_page)
@@ -306,6 +314,9 @@ def vote(recipe_id):
 
 @app.route('/comments/<recipe_id>', methods=['POST'])
 def add_coment(recipe_id):
+    users = mongo.db.users
+    current = users.find_one({'name': session['username']})
+
     if request.method == 'POST':
         recipe = mongo.db.Recipes
         thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
@@ -314,7 +325,8 @@ def add_coment(recipe_id):
             {'$push': {'comments': {
                 'userid': session['username'],
                 'comments': request.form.get('comment'),
-                'date': datetime.datetime.now()
+                'date': datetime.datetime.now(),
+                'avatar': current['avatar']
             }}}
         )
         return redirect(url_for('recipe_info', recipe_id=recipe_id))
