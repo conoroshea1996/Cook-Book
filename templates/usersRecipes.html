@@ -1,7 +1,14 @@
-{% extends 'base.html' %}{% block content %}
+{% extends 'base.html' %}
+{% set active_page = "userRecipes" %}
+{% block content %}
 <div class="container">
     <h1 class="text-center"> Welcome {{session['username']}} </h1>
     <h2 class="text-center">You currently have {{recipe.count()}} recipes in the database</h2>
+
+    {% if recipe.count() == 0 %}
+    You have no recipes in the database why not add one now
+    {% endif %}
+
     <div class="row my-4">
         {% for recipe in recipe %}
         <div class="col-md-6 col-lg-4 my-3 d-flex align-items-stretch">
