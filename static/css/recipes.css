@@ -130,7 +130,8 @@ small{
 
 .card-text{
     height: 150px !important;
-    overflow: scroll !important;
+    overflow: scroll;
+    overflow-x: hidden !important;
 }
 
 
@@ -153,5 +154,26 @@ small{
     border-bottom:1px dashed #efefef;
     margin-bottom:25px;
 }
-    
 
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 20px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: red; 
+    border-radius: 20px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+  }
