@@ -12,6 +12,10 @@
 }
 textarea{
     width: 100%;
+    border: solid lightgray 2px;
+}
+select{
+    background: lightgray;
 }
 
 .background{
