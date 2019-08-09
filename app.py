@@ -346,5 +346,10 @@ def add_coment(recipe_id):
         return redirect(url_for('recipe_info', recipe_id=recipe_id))
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error404.html'), 404
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), port=os.environ.get('PORT'), debug=True)
