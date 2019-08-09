@@ -55,8 +55,14 @@
                         {% endif %} </p>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                    <p class="m-0 pl-3">120 mins</p>
+                    <i class="fa fa-comment-o" aria-hidden="true"></i>
+                    <p class="m-0 pl-3 text-center">
+                        {% if recipeInfo.comments|length == 0%}
+                        no comments
+                        {% else %}
+                        {{recipeInfo.comments|length}}
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
                     <i class="fa fa-thumbs-o-up {% if session['username'] in userlike.users %} liked {% else %} {% endif %}"
@@ -104,6 +110,8 @@
     <div class="row">
         <div class="col-10 mx-auto">
             <h1 class="text-center">comment section</h1>
+
+            {% if session['username'] %}
             <form action="{{url_for('add_coment',recipe_id=recipeInfo._id)}}" method="POST">
                 <div class="searchbar">
                     <input class="searchBar" type="text" placeholder="Search" aria-label="Search" name="comment"
@@ -112,12 +120,17 @@
                         Post
                     </button>
                 </div>
+            </form>
+            {% else %}
+            <h3 class="text-center">Log in or sign up to join in on the chat</h3>
+            {% endif %}
+
         </div>
-        </form>
+
     </div>
 </div>
 <div class="container">
-    <div class="row bootstrap snippets">
+    <div class="row ">
         <div class="col-12">
             <div class="comment-wrapper">
                 <div class="panel panel-info">
