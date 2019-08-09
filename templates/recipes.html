@@ -1,14 +1,36 @@
-{% extends 'base.html' %}{% block content %}
-<div class="container">
+{% extends 'base.html' %}
+{% set active_page = "recipes" %}
+{% block content %}
 
+
+
+<div class="container">
     <form class="mt-4" action="{{url_for('filter_recipes')}}" method="POST">
         <div class="row">
             <div class="searchbar">
                 <input class="searchBar" type="text" placeholder="Search" aria-label="Search" name="query" id="query">
-                <i class="fa fa-search" aria-hidden="true"></i>
+                <div class="search-btn">
+                    <button class="btn btn-primary" type="submit" name="action">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
-            <!-- <div class="form-group col-12 col-md-6">
-                <label for="inputState">State</label>
+        </div>
+    </form>
+
+    <form class="mt-3" action="{{url_for('get_recipes')}}">
+        <div class="form-row">
+            <div class="form-group col-12 col-md-5">
+                <label for="inputState" class="my-0">State</label>
+                <select id="cusine" name="cusine" class="form-control">
+                    <option selected>Choose...</option>
+                    {% for cusine in orgin %}
+                    <option value="{{ cusine.cusine_name }}">{{ cusine.cusine_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-12 col-md-5">
+                <label for="inputState" class="my-0">State</label>
                 <select id="skill" name="skill" class="form-control">
                     <option selected>Choose...</option>
                     {% for skill in skill %}
@@ -16,20 +38,18 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="form-group col-12 col-md-6">
-                <label for="inputState">State</label>
-                <select id="cusine" name="cusine" class="form-control">
-                    <option selected>Choose...</option>
-                    {% for cusine in orgin %}
-                    <option value="{{ cusine.cusine_name }}">{{ cusine.cusine_name }}</option>
-                    {% endfor %}
-                </select>
-            </div> -->
-            <div class="col-12 text-center">
-                <button class="btn btn-primary w-100" type="submit" name="action">Filter</button>
+            <div class="col-2 text-center d-flex align-items-center">
+                <button class="btn btn-primary w-100" type="submit">Filter</button>
             </div>
         </div>
     </form>
+    {% if  request.args.get('cusine') or request.args.get('skill') %}
+    <div class="container">
+        <div class="row">
+            <a class="btn btn-primary col-12" href="{{url_for('get_recipes')}}">Reset</a>
+        </div>
+    </div>
+    {% endif %}
     <div class="row my-4">
         {% for recipe in recipe %}
         <div class="col-md-6 col-lg-4 my-3 d-flex align-items-stretch">

@@ -102,7 +102,16 @@ def get_recipes():
     else:
         username = ''
 
+    cusine_filter = request.args.get('cusine')
+    skill_filter = request.args.get('skill')
     recipes = mongo.db.Recipes.find()
+
+    if cusine_filter and skill_filter == 'Choose...':
+        recipes = mongo.db.Recipes.find(
+            {'cusine': cusine_filter})
+    elif cusine_filter and skill_filter:
+        recipes = mongo.db.Recipes.find(
+            {'cusine': cusine_filter, 'skill': skill_filter})
 
     per_page = 6
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -135,7 +144,12 @@ def add_recipe():
     if 'username' not in session:
         return render_template('error404.html')
 
-    return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find())
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+
+    return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
 
 
 @app.route('/insert_recipe', methods=['POST'])
