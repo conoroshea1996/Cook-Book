@@ -16,7 +16,7 @@ As a user of the recipe cookbook I should be able to do the following things:
 * Like recipes
 
 ## UI
-For this project I concentrated more on implentmenting features and logic and less so on the frontend which is why there is not much custom css and styling. I tried to use as much bootstrap as possible but I still needed to write some of my own css to achive to look I intened.
+For this project I concentrated more on implentmenting features and logic and less so on the frontend which is why there is not much custom css and styling. I tried to use as much bootstrap as possible but I still needed to write some of my own css to achive the look I intened.The wireframes below were used to give be a rough idea of how wanted the pages to look but I also adjusted the styling as I was building the project to make it more suitable .
 
 #### WireFrames
 
@@ -51,6 +51,12 @@ For this project I concentrated more on implentmenting features and logic and le
 
 *Comment Section*
 * A logged in user can make a comment on each recipe page
+
+*Filter Recipes*
+* Can filter recipes down by categories
+
+*Word Search*
+* Allows user to seaarch for a word to comes up in the title,tags or ingredients
 
 *Add and Edit Recipes*
 * A form input which allows the user to add a recipe to the database.
@@ -105,20 +111,22 @@ Testing was performed in 3 different ways.
 2. User testing
 3. Automated Testing 
 
-#### Browser Testing
+#### Browser Testing and Manual Testing
 
+##### Testing Responsiveness 
 During development the site was being checked regulary using google chrome , I made use of chrome developers tools to check the responsiveness of each page to make sure it looked good on all devices and adjusting layout as needed to find a happy medium. 
 
 After I had deployed the site to heroku I could regulary check it on my phone and tablet to see how it looked and feels in real life on its device.
 
-Because I used bootstrap and the grid system I found that everything was working nicely and looked the way I had intended it to look with no major issue expect some slight tinkering to layout on various devices.
+##### Testing Python Logic
+During the course of development. After each new feature was implmented. I checked it was doing what it should have been. This was done by checking my mongoDB database to see if I was getting the correct results. Like when I went to add a recipe I expected to see a new recipe in my database
 
 ####  User Testing
 
 I had classmates , family and friends check the website on various devices from phones,tablets and desktops no issues were reported back ect...
 
 #### Automated Testing
-This is a feature if more time was given I would of very much liked to explore further. Currently I have some very basic automated test that check if the page is loading or not.In the future as I gain more knowledge I intend to expand this much further to fully automate all the business logic.
+This is a feature if more time was given I would of very much liked to explore further. Currently I have some very basic automated test that check if the page is loading or not.In the future as I gain more knowledge I intend to expand this much further to fully automate all the business logic such as test for checking if a recipe has been added etc...
 
 
 ## Credits
