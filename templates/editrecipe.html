@@ -16,8 +16,8 @@
                     <small>Enter new recipe Image or leave empty to keep orginal Image</small>
                 </div>
 
-                <div class="form-group col-6 text-center">
-                    <label for="category" class="mx-2 ">Skill Level</label>
+                <div class="form-group col-12 col-md-4 text-center">
+                    <label for="category" class="mx-2 d-block">Skill Level</label>
                     <select id="category" name="skill">
                         <option value="{{ recipeInfo.skill }}" selected>{{ recipeInfo.skill }}</option>
                         {% for skill in skill %}
@@ -25,12 +25,21 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group col-6 text-center">
-                    <label for="Origin" class="mx-2">Place of Origin</label>
+                <div class="form-group col-12 col-md-4 text-center">
+                    <label for="Origin" class="mx-2 d-block">Place of Origin</label>
                     <select id="Origin" name="cusine">
                         <option value="{{ recipeInfo.cusine }}" selected>{{ recipeInfo.cusine }}</option>
                         {% for orgin in orgin %}
                         <option value="{{ orgin.cusine_name }}">{{ orgin.cusine_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-4 text-center">
+                    <label for="vegan" class="mx-2 d-block">Diet</label>
+                    <select id="vegan" name="vegan">
+                        <option value="{{recipeInfo.vegan}}" selected>{{recipeInfo.vegan}}</option>
+                        {% for diet in vegan %}
+                        <option value="{{diet.diet}}">{{diet.diet}}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -12,7 +12,7 @@
           <label for="imageUrl">Image URL</label>
           <input type="text" class="form-control" id="imageUrl" name="image">
         </div>
-        <div class="form-group col-6 text-center">
+        <div class="form-group col-12 col-md-4 text-center">
           <label for="category" class="mx-2 d-block">Difficulty</label>
           <select id="category" name="skill" required>
             <option value="" disabled selected>Choose Category</option>
@@ -21,12 +21,21 @@
             {% endfor %}
           </select>
         </div>
-        <div class="form-group col-6  text-center">
+        <div class="form-group col-12 col-md-4 text-center">
           <label for="Origin" class="mx-2 d-block">Place of Origin</label>
           <select id="Origin" name="cusine">
             <option value="" disabled selected>Choose Category</option>
             {% for orgin in orgin %}
             <option value="{{ orgin.cusine_name }}">{{ orgin.cusine_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-12 col-md-4 text-center">
+          <label for="vegan" class="mx-2 d-block">Diet</label>
+          <select id="vegan" name="vegan">
+            <option value="" disabled selected>Choose Category</option>
+            {% for diet in vegan %}
+            <option value="{{diet.diet}}">{{diet.diet}}</option>
             {% endfor %}
           </select>
         </div>

@@ -149,13 +149,13 @@ def add_recipe():
     else:
         username = ''
 
-    return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
+    return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), vegan=mongo.db.vegan.find(), user=username)
 
 
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
-    tasks = mongo.db.Recipes
-    tasks.insert_one({
+    recipes = mongo.db.Recipes
+    recipes.insert_one({
         'name': request.form.get('name'),
         'skill': request.form.get('skill'),
         'cusine': request.form.get('cusine'),
@@ -164,6 +164,7 @@ def insert_recipe():
         'ingredients': request.form.get('ingredients'),
         'instuctions': request.form.get('instuctions'),
         'tags': request.form.get('tags'),
+        'vegan': request.form.get('vegan'),
         'userid': session['username']
     })
 
@@ -203,6 +204,26 @@ def recipe_info(recipe_id):
     return render_template('recipeInfo.html', recipeInfo=recipe, colors=randomcolors, user=username, likes=total_likes, userlike=likes)
 
 
+@app.route('/comments/<recipe_id>', methods=['POST'])
+def add_coment(recipe_id):
+    users = mongo.db.users
+    current = users.find_one({'name': session['username']})
+
+    if request.method == 'POST':
+        recipe = mongo.db.Recipes
+        thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
+        recipe.update(
+            {'_id': ObjectId(recipe_id)},
+            {'$push': {'comments': {
+                'userid': session['username'],
+                'comments': request.form.get('comment'),
+                'date': datetime.datetime.now(),
+                'avatar': current['avatar']
+            }}}
+        )
+        return redirect(url_for('recipe_info', recipe_id=recipe_id))
+
+
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
     recipes = mongo.db.Recipes.find()
@@ -216,8 +237,13 @@ def edit_recipe(recipe_id):
     if 'username' not in session:
         return render_template('error404.html')
 
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = ''
+
     recipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
-    return render_template('editrecipe.html', recipeInfo=recipe, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find())
+    return render_template('editrecipe.html', recipeInfo=recipe, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), vegan=mongo.db.vegan.find(), user=username)
 
 
 @app.route('/update_recipe/<recipe_id>', methods=['POST'])
@@ -240,6 +266,7 @@ def update_recipe(recipe_id):
         'ingredients': request.form.get('ingredients').strip(),
         'instuctions': request.form.get('instuctions').strip(),
         'tags': request.form.get('tags'),
+        'vegan': request.form.get('vegan'),
         'userid': session['username']
     })
     return redirect(url_for('get_recipes'))
@@ -301,21 +328,6 @@ def vote(recipe_id):
             {'$push': {'users': session['username']}}
         )
 
-    # users = []
-
-    # for vote in vote:
-    #     users.append(vote['user_id']['name'])
-
-    # if user['name'] in users:
-    #     votes.remove({'user_id': user})
-    # else:
-    #     votes.insert_one(
-    #         {'recipe_id': ObjectId(recipe_id),
-    #          'like': 1,
-    #          'user_id': user
-    #          }
-    #     )
-
     if 'username' in session:
         username = session['username']
     else:
@@ -324,26 +336,6 @@ def vote(recipe_id):
     randomcolors = ['info', 'primary', 'danger', 'success', 'warning']
 
     return redirect(url_for('recipe_info', recipe_id=recipe_id))
-
-
-@app.route('/comments/<recipe_id>', methods=['POST'])
-def add_coment(recipe_id):
-    users = mongo.db.users
-    current = users.find_one({'name': session['username']})
-
-    if request.method == 'POST':
-        recipe = mongo.db.Recipes
-        thisrecipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
-        recipe.update(
-            {'_id': ObjectId(recipe_id)},
-            {'$push': {'comments': {
-                'userid': session['username'],
-                'comments': request.form.get('comment'),
-                'date': datetime.datetime.now(),
-                'avatar': current['avatar']
-            }}}
-        )
-        return redirect(url_for('recipe_info', recipe_id=recipe_id))
 
 
 @app.errorhandler(404)
