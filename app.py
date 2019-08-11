@@ -18,7 +18,7 @@ app.secret_key = 'secret_key'
 mongo = PyMongo(app)
 
 """
-HELPERS
+Helper Functions
 """
 
 
@@ -52,6 +52,11 @@ def test():
     return render_template('test.html')
 
 
+"""
+Checks if user is in database then check passwords match
+"""
+
+
 @app.route('/login', methods=['POST'])
 def login():
     users = mongo.db.users
@@ -69,10 +74,20 @@ def login():
         return redirect(url_for('index'))
 
 
+"""
+Clears session
+"""
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+"""
+Check if user already exist if not adds user
+"""
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -93,6 +108,11 @@ def register():
         return redirect(url_for('index'))
 
     return render_template('register.html')
+
+
+"""
+Get all recipes and display them
+"""
 
 
 @app.route('/recipes')
@@ -120,6 +140,11 @@ def get_recipes():
     recipe_page = recipes.skip((page - 1) * per_page).limit(per_page)
 
     return render_template('recipes.html', recipe=recipe_page, pagination=pagination, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), user=username)
+
+
+"""
+Gets recipes of current user in session
+"""
 
 
 @app.route('/users_recipes')
@@ -152,6 +177,11 @@ def add_recipe():
     return render_template('addrecipe.html', skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), vegan=mongo.db.vegan.find(), user=username)
 
 
+"""
+Inserts recipe into database
+"""
+
+
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
     recipes = mongo.db.Recipes
@@ -169,6 +199,11 @@ def insert_recipe():
     })
 
     return redirect(url_for('get_recipes'))
+
+
+"""
+Gets single recipe by id and displays more information
+"""
 
 
 @app.route('/single/<recipe_id>')
@@ -204,6 +239,11 @@ def recipe_info(recipe_id):
     return render_template('recipeInfo.html', recipeInfo=recipe, colors=randomcolors, user=username, likes=total_likes, userlike=likes)
 
 
+"""
+Adds object to comments array
+"""
+
+
 @app.route('/comments/<recipe_id>', methods=['POST'])
 def add_coment(recipe_id):
     users = mongo.db.users
@@ -222,6 +262,11 @@ def add_coment(recipe_id):
             }}}
         )
         return redirect(url_for('recipe_info', recipe_id=recipe_id))
+
+
+"""
+Deletes recipe from database
+"""
 
 
 @app.route('/delete_recipe/<recipe_id>')
@@ -244,6 +289,11 @@ def edit_recipe(recipe_id):
 
     recipe = mongo.db.Recipes.find_one({'_id': ObjectId(recipe_id)})
     return render_template('editrecipe.html', recipeInfo=recipe, skill=mongo.db.skill.find(), orgin=mongo.db.cusine.find(), vegan=mongo.db.vegan.find(), user=username)
+
+
+"""
+Updates Recipes
+"""
 
 
 @app.route('/update_recipe/<recipe_id>', methods=['POST'])
@@ -270,6 +320,11 @@ def update_recipe(recipe_id):
         'userid': session['username']
     })
     return redirect(url_for('get_recipes'))
+
+
+"""
+Filters recipes that contain keyword using regex
+"""
 
 
 @app.route('/filter_recipes', methods=['GET', 'POST'])
@@ -300,6 +355,11 @@ def filter_recipes():
     recipeValues = recipes.count()
 
     return render_template('filter.html', recipe=recipes, user=username, count=recipeValues, query=query, search=search_text)
+
+
+"""
+Like recipes
+"""
 
 
 @app.route('/vote/<recipe_id>')
@@ -336,6 +396,11 @@ def vote(recipe_id):
     randomcolors = ['info', 'primary', 'danger', 'success', 'warning']
 
     return redirect(url_for('recipe_info', recipe_id=recipe_id))
+
+
+"""
+Renders 404 page if 404 error
+"""
 
 
 @app.errorhandler(404)
