@@ -133,6 +133,10 @@ def get_recipes():
         recipes = mongo.db.Recipes.find(
             {'cusine': cusine_filter, 'skill': skill_filter})
 
+    if skill_filter and cusine_filter == 'Choose...':
+        recipes = mongo.db.Recipes.find(
+            {'skill': skill_filter})
+
     per_page = 6
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=recipes.count(), per_page=per_page,
