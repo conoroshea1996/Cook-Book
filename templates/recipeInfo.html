@@ -32,7 +32,10 @@
             <p class="show-hide my-0">tags:</p>
             <div class="row">
                 {% for tag in recipeInfo.tags.split(',') %}
+                {% if tag|length == 0 %}
+                {% else %}
                 <p class=" col-2 p-0 mx-2 my-0 btn alert-{{colors[range(0, 5) | random ]}}">{{tag}}</p>
+                {% endif %}
                 {% endfor %}
             </div>
             <div class="row my-3">
@@ -46,13 +49,8 @@
             <hr>
             <div class="row recipeInfo">
                 <div class="col d-flex justify-content-center align-items-center">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                    <p class="m-0 pl-3 text-center">
-                        {% if recipeInfo.time %}
-                        {{recipeInfo.time}} mins
-                        {% else %}
-                        unknown
-                        {% endif %} </p>
+                    <img class="vegan" src="{{url_for('static',filename='images/vegan.png')}}" alt="">
+                    <p class="m-0 pl-3 text-center"> {{recipeInfo.vegan}}</p>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
                     <i class="fa fa-comment-o" aria-hidden="true"></i>
@@ -148,7 +146,7 @@
                                 </a>
                                 <div class="media-body">
                                     <span class="text-muted pull-right">
-                                        <small class="text-muted mr-4">posted on {{comment.date}}</small>
+                                        <small class="text-muted mr-4">posted on {{comment.date.strftime("%c")}}</small>
                                     </span>
                                     <strong class="text-success ml-3">@{{comment.userid}}</strong>
                                     <p class="ml-3">
