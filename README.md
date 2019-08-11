@@ -5,9 +5,13 @@ A feature rich website for those who love food and also love to interract with o
 Goals of this project was to create something unquie but also give all the things you would expect a crud application to have.
 check it out [HERE](https://cook-book-cos.herokuapp.com/) 
 
+#### My personal goals for this project are:
+
+Develop my python skills. Learn how to work with the Flask framework.To problem solve and come up with creative solutions to unquie problems. To gain experience working with Databases in general.Learn how to deploy to herkou.Also time management skills to 
 #### After thoughts
 I had given myself an ambitious project which I was determined to complete looking back however I would of much prefered to of pull backed some features to give a more polished look and feel. But I could'nt help but try to  create a feature rich website.
 I would of liked to had more time for styling and polishing which I plan to come back to in the future.
+I have learned to time manage much better and to realise that some things take longer than expected.
 
 ## UX
 
