@@ -5,6 +5,10 @@ A feature rich website for those who love food and also love to interract with o
 Goals of this project was to create something unquie but also give all the things you would expect a crud application to have.
 check it out [HERE](https://cook-book-cos.herokuapp.com/) 
 
+#### After thoughts
+I had given myself an ambitious project which I was determined to complete looking back however I would of much prefered to of pull backed some features to give a more polished look and feel. But I could'nt help but try to  create a feature rich website.
+I would of liked to had more time for styling and polishing which I plan to come back to in the future.
+
 ## UX
 
 *User Stories:*
@@ -98,6 +102,7 @@ Due to such a tight time limit there was a lot of feature I had to leave out the
 * A dislike button on each recipe
 * More Automated test for the business logic of the application
 * Form validation using python instead of html
+* On delete of a recipe if you are on users recipe it redirects you back to all recipes in the future I intend to fix this so it stays on user recipes but with limited time I choose not to spend to much time on this
 
 ## Technologies Used
 
@@ -149,7 +154,7 @@ During the course of development. After each new feature was implmented. I check
 I had classmates , family and friends check the website on various devices from phones,tablets and desktops no issues were reported back ect...
 
 #### Automated Testing
-This is a feature if more time was given I would of very much liked to explore further. Currently I have some very basic automated test that check if the page is loading or not.In the future as I gain more knowledge I intend to expand this much further to fully automate all the business logic such as test for checking if a recipe has been added etc...
+This is a feature if more time was given I would of very much liked to explore further. Currently I have some very basic automated test that check if the page is loading or not. In the future as I gain more knowledge I intend to expand this much further to fully automate all the business logic such as test for checking if a recipe has been added etc...
 
 
 ## Deployment
