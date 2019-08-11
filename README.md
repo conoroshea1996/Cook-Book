@@ -107,7 +107,8 @@ Due to such a tight time limit there was a lot of feature I had to leave out the
 * More Automated test for the business logic of the application
 * Form validation using python instead of html
 * On delete of a recipe if you are on users recipe it redirects you back to all recipes in the future I intend to fix this so it stays on user recipes but with limited time I choose not to spend to much time on this
-
+* Refactor code 
+* More custom styling to make site look more unique
 ## Technologies Used
 
 #### Python
