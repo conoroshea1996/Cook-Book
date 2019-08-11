@@ -1,7 +1,9 @@
-# The CookBook 
+# Recipe website 
 *by conor o shea*
 
-A socailly Recipe website for users to put up there own recipes in which others can like the recipe and share comments with one another 
+A feature rich website for those who love food and also love to interract with other.
+Goals of this project was to create something unquie but also give all the things you would expect a crud application to have.
+check it out [HERE](https://cook-book-cos.herokuapp.com/) 
 
 ## UX
 
@@ -16,7 +18,7 @@ As a user of the recipe cookbook I should be able to do the following things:
 * Like recipes
 
 ## UI
-For this project I concentrated more on implentmenting features and logic and less so on the frontend which is why there is not much custom css and styling. I tried to use as much bootstrap as possible but I still needed to write some of my own css to achive the look I intened.The wireframes below were used to give be a rough idea of how wanted the pages to look but I also adjusted the styling as I was building the project to make it more suitable .
+For this project I concentrated more on implentmenting features and logic and less so on the frontend which is why there is not much custom css and styling. I tried to use as much bootstrap as possible but I still needed to write some of my own css to achive the look I intened.The wireframes below were used to give be a rough idea of how I wanted the pages to look but I also adjusted the styling as I was building the project to make it more suitable . For the edit and add recipe page I styled it as i was going as I was not sure how I wanted it to look
 
 #### WireFrames
 
@@ -24,6 +26,28 @@ For this project I concentrated more on implentmenting features and logic and le
 | :------------------------------------: | :---------------------------------: |
 | ![](wireframes/IndexPage.png) | ![](wireframes/IndexPageMobile.png) |
 | ![](wireframes/RecipesPage.png) | ![](wireframes/RecipePageMobile.png) |
+| ![](wireframes/RecipeInfo.png) | ![](wireframes/RecipeInfoMobile.png) |
+
+## Database 
+For this project I deciced to use mongoDB  for my database the following schema are taken from my database used for ths project:
+
+  |                Recipes Schema                 |        
+| :------------------------------------: |
+| ![](DatabaseSchema/recipes.png) | 
+
+|                Users Schema                 |     
+| :------------------------------------: |
+| ![](DatabaseSchema/User.png) | 
+
+|                Likes Schema                 |     
+| :------------------------------------: |
+| ![](DatabaseSchema/likes.png) | 
+
+|                Cusine Schema                 |     
+| :------------------------------------: |
+| ![](DatabaseSchema/Cusine.png) | 
+
+
 
 ## Current Features
 *Register and  Login*
@@ -43,7 +67,7 @@ For this project I concentrated more on implentmenting features and logic and le
 * A page which allows logged in users to qucikly see only there current recipes in the database
 
 *Pagination*
-* Pagination is included on the recipes pages when the number of results to display is over 6. This is to reduce loading times.
+* Pagination is included on the recipes pages when the number of results to display is over 6. This is to reduce loading times and give the users a smoother experience
 
 *Like Button*
 * Once a user is logged in they have the ability to like a recipe
@@ -72,7 +96,6 @@ Due to such a tight time limit there was a lot of feature I had to leave out the
 * A user profile page where you could check out that users reipes
 * An admin type age which would display charts of what type of recipes have the most like etc....
 * A dislike button on each recipe
-
 * More Automated test for the business logic of the application
 * Form validation using python instead of html
 
@@ -129,14 +152,35 @@ I had classmates , family and friends check the website on various devices from 
 This is a feature if more time was given I would of very much liked to explore further. Currently I have some very basic automated test that check if the page is loading or not.In the future as I gain more knowledge I intend to expand this much further to fully automate all the business logic such as test for checking if a recipe has been added etc...
 
 
+## Deployment
+
+I deployed my site early on in development
+
+The site is deployed to Heroku under the following process:
+
+1. Create a new project called cookbook
+2. Create a new git repository 
+3. Push to Github
+4. In herkou create a new app 
+5. In heroku dashboard go to Deploy in deployemnt method choose github
+6. Follow guidlines to connect the app to the GitHub repo
+7. Enable automatic deploys
+8. Code that now is pushed to github will automatically update herkou
+9. In herkou dashboard go to settings
+10. Click Reveal Config Vars
+    - set the port to 0.0.0.0 - this opens your app to all IPS
+    - set the port 5000
+    - set the MONGO URI to link to mongoDB database
+
+Project can be found [HERE](https://cook-book-cos.herokuapp.com/) 
+
 ## Credits
 
 ###  Content and Media
 
-- I used  BBC Recipes to add al the orginal recipes to the database https://www.bbc.co.uk/food/recipes
+- I used  BBC Recipes to add all of the orginal recipes to the database source https://www.bbc.co.uk/food/recipes
 
 ### Acknowledgements
 - Thanks to my mentor spencer for all the advice throughout the project
-- Thanks to classmate liam for discussing problems and solving them in some pair programming 
-
+- Documentation for flask_pagination was used to implment pagination
 
